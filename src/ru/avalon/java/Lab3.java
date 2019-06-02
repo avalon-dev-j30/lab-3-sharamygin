@@ -99,7 +99,7 @@ public class Lab3 extends ConsoleUI<Commands> {
                 break;                 
                 
             case exit:
-                System.out.println("\nThe programm will now be terminated.");
+                System.out.println("\nExiting the program.");
                 close();
                 break;
                 /*
