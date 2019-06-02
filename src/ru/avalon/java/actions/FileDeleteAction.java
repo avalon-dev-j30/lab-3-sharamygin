@@ -13,32 +13,23 @@ import static ru.avalon.java.Lab3.monitor;
  * Действие, которое копирует файлы в пределах дискового
  * пространства.
  */
-public class FileCopyAction implements Action {
+public class FileDeleteAction implements Action {
 
-    private String name;
     private Path path2source;
-    private Path path2target;
 
-    public FileCopyAction(String source, String target) {
-        String[] splitter = source.split("/");
-        name = splitter[splitter.length - 1];
+    public FileDeleteAction(String source) {
         path2source = Paths.get(source);
-        path2target = Paths.get(target + "/"+ name);
     }
 
-    private void copy() throws IOException {
+    private void delete() throws IOException {
 
         if (!Files.exists(path2source)) {
             System.out.println("There is no file with such name in source directory!" + "\n" + "Please, type correct file name.\n");
-            return;
         } 
-        if (Files.exists(path2target)) {
-            System.out.println("There is already file called " + name + "\n");
-            return;
-        }
+        
         else {
-            Files.copy(path2source, path2target, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("Copy operation completed.\n");
+            Files.delete(path2source);
+            System.out.println("Delete operation completed.\n");
         }
 
     }
@@ -51,9 +42,9 @@ public class FileCopyAction implements Action {
             */
         synchronized(monitor){
         try {   
-            copy();
+            delete();
         } catch (IOException ex) {
-            System.out.println("File copy operation failed!\n");
+            System.out.println("File delete operation failed!\n");
             System.out.println(ex.getMessage());
         }
         monitor.notifyAll();
